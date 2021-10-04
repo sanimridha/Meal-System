@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Platform,
     SafeAreaView,
@@ -6,12 +6,17 @@ import {
     Text,
     View,
     StatusBar,
+    TouchableOpacity,
 } from "react-native";
+import CheckBox from "@react-native-community/checkbox";
+
 const primary = "#1490A6",
     secondary = "#717171",
     border = "#C0C0C0";
 
 const SelectFilter = () => {
+    const [toggleCheckBox, setToggleCheckBox] = useState(false);
+
     const HeaderTop = () => (
         <View style={{ height: 60, backgroundColor: primary }}></View>
     );
@@ -38,15 +43,16 @@ const SelectFilter = () => {
             }}
         >
             <Text style={{ color: primary, paddingRight: 5 }}>{title}</Text>
-            <View
+            <TouchableOpacity
+                activeOpacity={0.5}
                 style={{
                     height: 30,
                     borderColor: primary,
                     borderWidth: 1,
-                    // flex: 1,
+                    borderRadius: 2,
                     width: "85%",
                 }}
-            ></View>
+            ></TouchableOpacity>
         </View>
     );
 
@@ -58,6 +64,21 @@ const SelectFilter = () => {
                 marginVertical: 10,
             }}
         ></View>
+    );
+    const CheckboxPicker = ({ title }) => (
+        <View
+            style={{
+                flexDirection: "row",
+                alignItems: "center",
+            }}
+        >
+            <CheckBox
+                disabled={false}
+                value={toggleCheckBox}
+                onValueChange={newValue => setToggleCheckBox(newValue)}
+            />
+            <Text style={{ color: secondary }}>{title}</Text>
+        </View>
     );
 
     return (
@@ -72,6 +93,7 @@ const SelectFilter = () => {
                         borderColor: primary,
                         marginTop: 30,
                         marginHorizontal: 20,
+                        borderRadius: 2,
                     }}
                 >
                     <View style={{ padding: 15 }}>
@@ -79,6 +101,31 @@ const SelectFilter = () => {
                         <Border />
                         <TextInputField title="From" />
                         <TextInputField title="To" />
+                        <Text style={[styles.boldText, { paddingTop: 10 }]}>
+                            Status
+                        </Text>
+                        <Border />
+                        <CheckboxPicker title="Active" />
+                        <CheckboxPicker title="Super Active" />
+                        <CheckboxPicker title="Bored" />
+
+                        <TouchableOpacity
+                            activeOpacity={0.5}
+                            style={{
+                                backgroundColor: primary,
+                                alignItems: "center",
+                                justifyContent: "center",
+                                height: 40,
+                                width: 90,
+                                borderRadius: 5,
+                                alignSelf: "center",
+                                marginTop: 20,
+                            }}
+                        >
+                            <Text style={{ color: "white", fontSize: 16 }}>
+                                Generate
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
